@@ -13,6 +13,12 @@ category_level = None
 if category:
     category_level = st.text_input("Category Level", "This field is mandatory if Category is filled")
 
+#File Uploader
+uploaded_file = st.file_uploader("Choose a file")
+if uploaded_file is not None:
+    dataframe = pd.read_json(uploaded_file)
+    st.write(dataframe)
+
 # Submit button
 if st.button("Submit"):
     if not category and not category_level:
