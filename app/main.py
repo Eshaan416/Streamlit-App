@@ -4,7 +4,7 @@ st.write(st.secrets)
 from sqlalchemy import text
 from normalization import normalized_dataframes
 from insertion import insert_data
-
+from queries import cat_level, get_by_name, get_by_uniqueid
 
 conn = st.connection('postgresql', 'sql')
 
@@ -49,15 +49,14 @@ elif input_choice == "Category":
     name = ""
     unique_id = ""
 
-# File Uploader
-uploaded_file = st.file_uploader("Choose a file")
-if uploaded_file is not None:
-    dataframe = pd.read_json(uploaded_file)
-    st.write(dataframe)
-
 # Submit button
 if st.button("Submit"):
     if input_choice == "Category" and not category_level:
         st.error("Category Level is mandatory when Category is filled.")
     else:
-        st.success(f"Submitted:\nName: {name}\nUniqueID: {unique_id}\nCategory: {category}\nCategory Level: {category_level}")
+        if input_choice == "Name":
+            get_by_name(name)
+        elif input_choice == "UniqueID":
+            get_by_uniqueid(unique_id)
+        elif input_choice == "Category":
+            cat_level(category, category_level)

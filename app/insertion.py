@@ -8,8 +8,8 @@ def insert_data(df_items,df_categories):
 
 
     with conn.session as s:
-        s.execute(text('DROP TABLE categories;'))
-        s.execute(text('DROP TABLE items;'))
+        s.execute(text('DROP TABLE IF EXISTS categories;'))
+        s.execute(text('DROP TABLE IF EXISTS items;'))
         s.execute(text('CREATE TABLE IF NOT EXISTS items (uid TEXT PRIMARY KEY,title TEXT,availability BOOLEAN,description TEXT, img TEXT,price INT,gender TEXT);'))
         s.execute(text('CREATE TABLE IF NOT EXISTS categories(uid TEXT,level int,name text,PRIMARY KEY(uid,level),FOREIGN KEY(uid) REFERENCES items(uid));'))
         
