@@ -15,6 +15,9 @@ This Streamlit app facilitates exploration and querying of an e-commerce catalog
 3. Install dependencies using `pip install -r requirements.txt`.
 4. Run the Streamlit app: `streamlit run app/main.py`.
 
+## Database
+1. run `docker compose up` to spin up the postgres image
+
 ## Usage
 1. Upload your JSON catalog file.
 2. Use the provided search functionality to explore the catalog.
