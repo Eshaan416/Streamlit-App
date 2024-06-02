@@ -7,7 +7,7 @@ def normalized_dataframes(df_json):
             del df_json[col]
     df_categories=pd.DataFrame(columns=['uniqueId','level','cat'])
     for index,row in df_json.iterrows():
-        levels=0
+        levels=1
         for category in row['category']:
            df_categories.loc[len(df_categories.index)] = [row['uniqueId'],levels,category]
            levels=levels+1
