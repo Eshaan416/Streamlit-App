@@ -2,7 +2,7 @@ from sqlalchemy import text
 
 import streamlit as st
 
-
+@st.cache_data
 def insert_data(df_items,df_categories):
     conn = st.connection('postgresql', 'sql')
 
