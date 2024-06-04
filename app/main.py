@@ -1,13 +1,12 @@
 import streamlit as st
 import pandas as pd
-st.write(st.secrets)
 from sqlalchemy import text
 from normalization import normalized_dataframes
 from insertion import insert_data
 from queries import cat_level, get_by_name, get_by_uniqueid
 
 conn = st.connection('postgresql', 'sql')
-
+st.title("Upload Box")
 uploaded_json=st.file_uploader('Drop your database in json format',['json'],False)
 
 if uploaded_json is not None:
@@ -18,10 +17,7 @@ if uploaded_json is not None:
     
     insert_data(df_items,df_categories)
         
-    test=conn.query('select * from items')
-    st.write(test)
-    test2=conn.query('select * from categories')
-    st.write(test2)
+    
 
 import streamlit as st
 import pandas as pd
@@ -45,13 +41,15 @@ elif input_choice == "UniqueID":
     category_level = None
 elif input_choice == "Category":
     category = st.text_input("Category")
-    category_level = st.text_input("Category Level", "This field is mandatory if Category is filled")
+    category_level = st.text_input("Category Level")
     name = ""
     unique_id = ""
 
 # Submit button
 if st.button("Submit"):
-    if input_choice == "Category" and not category_level:
+    if uploaded_json is None:
+        st.error("Please upload the desired json database file")
+    elif input_choice == "Category" and not category_level:
         st.error("Category Level is mandatory when Category is filled.")
     else:
         if input_choice == "Name":
