@@ -4,6 +4,7 @@ import pandas as pd
 conn = st.connection("postgresql", "sql")
 
 # Function to retrieve data using category and category level
+@st.cache_data
 def cat_level(category, category_level):
     res = conn.query(
         "SELECT items.uid,items.img,items.title FROM items, categories WHERE categories.level = :c AND categories.name = :d AND items.uid = categories.uid;",
@@ -16,6 +17,7 @@ def cat_level(category, category_level):
         
 
 # Function to retrieve data using name
+@st.cache_data
 def get_by_name(title):
     res = conn.query(
         "SELECT items.uid,items.img,items.title,ARRAY_AGG(categories.name) as categories_field FROM items,categories WHERE items.title = :n AND items.uid=categories.uid GROUP BY items.uid;",
@@ -37,6 +39,7 @@ def get_by_name(title):
             level+=1
 
 # Function to retrieve data using uniqueid
+@st.cache_data
 def get_by_uniqueid(uid):
     res = conn.query(
         "SELECT items.uid,items.img,items.title,ARRAY_AGG(categories.name) as categories_field FROM items,categories WHERE items.uid = :u and categories.uid=items.uid GROUP BY items.uid",
@@ -56,3 +59,4 @@ def get_by_uniqueid(uid):
             col2.write(category)
             col2.divider()
             level+=1
+
